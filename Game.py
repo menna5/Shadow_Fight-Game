@@ -15,11 +15,11 @@ clock = pygame.time.Clock()
 WORK = 10000000
 
 # BG
-loading_bg = pygame.image.load("Loading Bar Background.png")
+loading_bg = pygame.image.load("Pics\Loading Bar Background.png")
 loading_bg_rect = loading_bg.get_rect(center=(640, 360))
 
 # loading bar
-loading_bar = pygame.image.load("Loading Bar.png")
+loading_bar = pygame.image.load("Pics\Loading Bar.png")
 loading_bar_rect = loading_bar.get_rect(midleft=(320, 180))
 loading_progress = 0
 loading_bar_width = 2
@@ -58,7 +58,7 @@ while running:
     else:
         pygame.display.set_caption('Fight')
         # background
-        background = pygame.image.load('Background.JPG')
+        background = pygame.image.load('Pics\Background.JPG')
         background = pygame.transform.scale(background, (1280, 720))
         screen.blit(background, (0, 0))
     pygame.display.update()
