@@ -1,10 +1,9 @@
 import pygame, threading
-from threading import Event
+
 # initialization
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption('Loading..')
-delay = 1
 
 font = pygame.font.SysFont('roboto', 100)
 
@@ -31,7 +30,6 @@ def doWork():
     global loading_progress, loading_finish
     
     for i in range(WORK):
-        #Event().wait(delay)
         loading_progress = i
     loading_finish = True
     
@@ -47,13 +45,13 @@ while running:
         if event.type == pygame.QUIT:
             pygame.quit()
             running = False
-    #if not loading_finish:
-    loading_bar_width = int(loading_progress / WORK * 720)
-    loading_bar = pygame.transform.scale(loading_bar, (loading_bar_width, 150))
-    loading_bar_rect = loading_bar.get_rect(midleft=(280, 360))
-        
-    screen.blit(loading_bg, loading_bg_rect)
-    screen.blit(loading_bar, loading_bar_rect)
+    if not loading_finish:
+        loading_bar_width = int(loading_progress / WORK * 720)
+        loading_bar = pygame.transform.scale(loading_bar, (loading_bar_width, 150))
+        loading_bar_rect = loading_bar.get_rect(midleft=(280, 360))
+            
+        screen.blit(loading_bg, loading_bg_rect)
+        screen.blit(loading_bar, loading_bar_rect)
         
     pygame.display.update()
     clock.tick(60)
