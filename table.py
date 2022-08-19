@@ -8,10 +8,6 @@ def display(scores):
     master = Tk()
     master.title('Score')
     master.geometry('1000x600')
-    image_0 = Image.open('assets/background/background.png')
-    bck_end = ImageTk.PhotoImage(image_0)
-    lbl = Label(master,image=bck_end)
-    lbl.place(x=0,y=0)
     game_frame = Frame(master)
     game_frame.pack()
     
@@ -46,8 +42,9 @@ def display(scores):
     my_game.heading("player_Rank", text="Rank", anchor=CENTER)
     
     # add data
-    my_game.insert(parent='', index='end', iid=0, text='',
-                   values=(f'scores[0]', f'{scores[1]}', f'scores[2]'))
+    for score in scores:
+        my_game.insert(parent='', index='end', text='',
+                       values=(f'{score[0]}', f'{score[1]}', f'{score[2]}'))
     my_game.pack()
     
     frame = Frame(master)

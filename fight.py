@@ -2,11 +2,11 @@ import pygame as pg
 import pygame.mixer
 from pygame import mixer
 from fighter import Fighter
-import table
 
+flag  = 0
 def main():
+    global flag 
     mixer.init()
-    ##pg.init()
     
     # sets the frame rate of the game to suit all computers.
     clock = pg.time.Clock()
@@ -104,6 +104,7 @@ def main():
     
     
     active = True
+    flag = 0
     
     # controls the boot of the game.
     while active:
@@ -119,8 +120,8 @@ def main():
         #show player stats
         draw_health_bar(fighter_1.health,20,20)
         draw_health_bar(fighter_2.health,580,20)
-        draw_text("Fantasy warrior : " +str(score[0]),score_font,red , 20 , 60)
-        draw_text("Evil wizard : " +str(score[1]),score_font,red , 500 , 60)
+        draw_text("Fantasy warrior",score_font,red , 20 , 60)
+        draw_text("Evil wizard",score_font,red , 577 , 60)
     
     
     
@@ -172,7 +173,12 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 active = False
-                pg.quit()
-    
-        # updates the display of the game.
-        pg.display.update()    
+                flag = 1
+        if flag:
+            pg.quit()
+        else:
+            # updates the display of the game.
+            pg.display.update()    
+
+def check():
+    return flag
