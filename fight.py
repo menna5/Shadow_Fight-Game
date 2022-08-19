@@ -14,8 +14,6 @@ def main(player1, player2):
     fps = 60
     
     #define colors
-    red=(255,0,0)
-    yellow=(255,255,0)
     white=(255,255,255)
     
     #define game variables
@@ -74,6 +72,7 @@ def main(player1, player2):
     
     
     # define fonts
+    victory_font=pg.font.Font('assets/fonts/turok.ttf',80)
     count_font=pg.font.Font('assets/fonts/turok.ttf',80)
     score_font=pg.font.Font('assets/fonts/turok.ttf',30)
     
@@ -93,9 +92,9 @@ def main(player1, player2):
     #function for drawing fighters health bars
     def draw_health_bar(health,x,y):
         ratio=health/100
-        pg.draw.rect(screen,white,(x-2,y-2,404,34))
-        pg.draw.rect(screen,red,(x,y,400,30))
-        pg.draw.rect(screen,yellow,(x,y,400*ratio,30))
+        pg.draw.rect(screen,'#4C4862',(x-2,y-2,404,34))
+        pg.draw.rect(screen,'#4C4862',(x,y,400,30))
+        pg.draw.rect(screen,'#20192B',(x,y,400*ratio,30))
     
     
     
@@ -121,8 +120,8 @@ def main(player1, player2):
         #show player stats
         draw_health_bar(fighter_1.health,20,20)
         draw_health_bar(fighter_2.health,580,20)
-        draw_text(player1,score_font,red , 20 , 60)
-        draw_text(player2,score_font,red , 577 , 60)
+        draw_text(player1,score_font,'#ffffff' , 20 , 60)
+        draw_text(player2,score_font,'#ffffff' , 577 , 60)
     
     
     
@@ -134,7 +133,7 @@ def main(player1, player2):
             fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, fighter_1, round_over)
         else:
             # display count timer
-            draw_text(str(intro_count),count_font,red,SCREEN_WIDTH/2,SCREEN_HEIGHT/3)
+            draw_text(str(intro_count),count_font,"#ffffff",SCREEN_WIDTH/2,SCREEN_HEIGHT/3)
             # update count timer
             if (pg.time.get_ticks()-last_count_update)>=1000:
                 intro_count-=1
@@ -159,7 +158,9 @@ def main(player1, player2):
                 round_over_time = pg.time.get_ticks()
         else:
             # display victory image
-            screen.blit(victory_img, (360, 150))
+            # display count timer
+            draw_text('Game Over',victory_font,"#ffffff",330, 150)
+            #screen.blit(victory_img, (360, 150))
             if pg.time.get_ticks() -round_over_time > ROUND_OVER_COOLDOWN:
                 round_over = False
                 intro_count = 3

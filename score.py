@@ -3,11 +3,20 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 import fight
 
+# bg color
+color = '#71556C'
 flag = False
+play_again = False
 def display(scores):
     master = Tk()
     master.title('Score')
     master.geometry('1000x600')
+    master.configure(bg='#86514D')
+    img = Image.open("assets/background/background.png")
+    img = img.resize((1000,600))
+    img = ImageTk.PhotoImage(img)
+    lbl = Label(master,image=img)
+    lbl.pack(side='top',fill=Y,expand=True)
     game_frame = Frame(master)
     game_frame.pack()
     
@@ -53,18 +62,18 @@ def display(scores):
     my_game.pack()
     
     frame = Frame(master)
-    frame.pack(pady=20)
+    frame.pack(pady=40, padx=50)
     
     def playAgain():
         global flag
         flag = False
+        play_again = True
         master.destroy()
         
     def quitt():
         global flag
         flag = True
-        master.destroy()
-        
+        master.destroy()   
     
     
     # Buttons
