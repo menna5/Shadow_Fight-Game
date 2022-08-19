@@ -14,7 +14,7 @@ def first_page():
     clock = pygame.time.Clock()
     
     # work
-    WORK = 10000000
+    WORK = 1000000
     
     # BG
     loading_bg = pygame.image.load("assets\Loading Bar Background.png")
@@ -27,9 +27,10 @@ def first_page():
     loading_bar_width = 2
     loading_finish = False
     
-    # text
-    #text = Font.render('Getting into the game ..', False, '#ffffff')
-    #textRect = text.get_rect(center=(625, 200))
+    #text
+    text = Font.render('Getting into the game ..', False, '#ffffff')
+    textRect = text.get_rect(center=(625, 200))
+    
     def doWork():
         global loading_progress, loading_finish
         
@@ -43,15 +44,14 @@ def first_page():
     
     # running
     running = True
+    flag = 0
     # get Keypresses.
     while running:
-        key = pygame.key.get_pressed()
         screen.fill('#0d0e2e')
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
                 running = False
-        '''
+                flag = 1
         if not loading_finish:
             loading_bar_width = int(loading_progress / WORK * 720)
             loading_bar = pygame.transform.scale(loading_bar, (loading_bar_width, 150))
@@ -60,21 +60,10 @@ def first_page():
             screen.blit(loading_bg, loading_bg_rect)
             screen.blit(loading_bar, loading_bar_rect)
         else:
-            
-            pygame.display.set_caption('Fight')
-            # background
-            background = pygame.image.load('assets/background/background.jpg')
-            background = pygame.transform.scale(background, (1280, 720))
-            screen.blit(background, (0, 0))
-            '''
-        pygame.display.set_caption('Fight')
-        # background
-        background = pygame.image.load('assets/background/background.jpg')
-        background = pygame.transform.scale(background, (1280, 720))
-        screen.blit(background, (0, 0))
-        
-        if key[pygame.K_UP]:
             break
-        
-        pygame.display.update()
-        clock.tick(60)
+        if flag:
+            pygame.quit()
+        else:
+            pygame.display.update()
+            clock.tick(60)
+first_page()

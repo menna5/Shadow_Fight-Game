@@ -3,8 +3,9 @@ import pygame.mixer
 from pygame import mixer
 from fighter import Fighter
 
-flag  = 0
-def main():
+score=[0, 0] #player scores [p1,p2]
+flag  = False
+def main(player1, player2):
     global flag 
     mixer.init()
     
@@ -18,9 +19,9 @@ def main():
     white=(255,255,255)
     
     #define game variables
+    global score #player scores [p1,p2]
     intro_count=3
     last_count_update=pg.time.get_ticks()
-    score=[0,0] #player scores [p1,p2]
     round_over =False
     ROUND_OVER_COOLDOWN=2000
     
@@ -120,8 +121,8 @@ def main():
         #show player stats
         draw_health_bar(fighter_1.health,20,20)
         draw_health_bar(fighter_2.health,580,20)
-        draw_text("Fantasy warrior",score_font,red , 20 , 60)
-        draw_text("Evil wizard",score_font,red , 577 , 60)
+        draw_text(player1,score_font,red , 20 , 60)
+        draw_text(player2,score_font,red , 577 , 60)
     
     
     
@@ -151,12 +152,9 @@ def main():
     
         #check for player defeat
         if round_over == False:
-            if fighter_1.alive == False:
-                score[1] += 1
-                round_over = True
-                round_over_time = pg.time.get_ticks()
-            elif fighter_2.alive == False:
-                score[0] += 1
+            if fighter_1.alive == False or fighter_2.alive == False:
+                score[0] += fighter_1.score
+                score[1] += fighter_2.score
                 round_over = True
                 round_over_time = pg.time.get_ticks()
         else:
@@ -173,12 +171,14 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 active = False
-                flag = 1
+                flag = True
         if flag:
             pg.quit()
+            break
         else:
             # updates the display of the game.
             pg.display.update()    
 
-def check():
-    return flag
+def get_score():
+    global score
+    return score

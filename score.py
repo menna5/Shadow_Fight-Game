@@ -3,7 +3,7 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 import fight
 
-check = 0
+flag = False
 def display(scores):
     master = Tk()
     master.title('Score')
@@ -27,41 +27,49 @@ def display(scores):
     
     # define our column
     
-    my_game['columns'] = ('player_id', 'player_name', 'player_Rank')
+    my_game['columns'] = ('player_rank', 'player_name', 'player_score', 'Date', 'Time')
     
     # format our column
     my_game.column("#0", width=0, stretch=NO)
-    my_game.column("player_id", anchor=CENTER, width=100)
+    my_game.column("player_rank", anchor=CENTER, width=100)
     my_game.column("player_name", anchor=CENTER, width=100)
-    my_game.column("player_Rank", anchor=CENTER, width=100)
+    my_game.column("player_score", anchor=CENTER, width=100)
+    my_game.column("Date", anchor=CENTER, width=100)
+    my_game.column("Time", anchor=CENTER, width=100)
     
     # Create Headings
     my_game.heading("#0", text="", anchor=CENTER)
-    my_game.heading("player_id", text="Id", anchor=CENTER)
+    my_game.heading("player_rank", text="Rank", anchor=CENTER)
     my_game.heading("player_name", text="Name", anchor=CENTER)
-    my_game.heading("player_Rank", text="Rank", anchor=CENTER)
+    my_game.heading("player_score", text="Score", anchor=CENTER)
+    my_game.heading("Date", text="Date", anchor=CENTER)
+    my_game.heading("Time", text="Time", anchor=CENTER)
     
     # add data
+    i = 1
     for score in scores:
-        my_game.insert(parent='', index='end', text='',
-                       values=(f'{score[0]}', f'{score[1]}', f'{score[2]}'))
+        my_game.insert(parent='', index='end', text='', values=(f'{i}', f'{score[0]}', f'{score[2]}', f'{score[3]}', f'{score[4]}'))
+        i += 1
     my_game.pack()
     
     frame = Frame(master)
     frame.pack(pady=20)
     
     def playAgain():
-        global check
-        check = 1
+        global flag
+        flag = False
         master.destroy()
+        
+    def quitt():
+        global flag
+        flag = True
+        master.destroy()
+        
     
     
     # Buttons
     play_btn = Button(master, text = "Play Again", command = playAgain)
     play_btn.pack(pady=10)
-    quit_btn = Button(master, text = "Quit", command = master.destroy)
+    quit_btn = Button(master, text = "Quit", command = quitt)
     quit_btn.pack(pady=10)
     master.mainloop()
-
-def flag():
-    return check

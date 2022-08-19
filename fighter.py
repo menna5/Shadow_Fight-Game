@@ -185,6 +185,7 @@ class Fighter:
             attacking_rect = pg.Rect(self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y,2 * self.rect.width, self.rect.height)
             if attacking_rect.colliderect(target.rect):
                 target.health -= 10
+                self.score += 10
                 target.hit = True
 
     def update_action(self, new_action):
