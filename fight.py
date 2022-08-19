@@ -157,10 +157,8 @@ def main(player1, player2):
                 round_over = True
                 round_over_time = pg.time.get_ticks()
         else:
-            # display victory image
-            # display count timer
+            # display victory text
             draw_text('Game Over',victory_font,"#ffffff",330, 150)
-            #screen.blit(victory_img, (360, 150))
             if pg.time.get_ticks() -round_over_time > ROUND_OVER_COOLDOWN:
                 round_over = False
                 intro_count = 3
