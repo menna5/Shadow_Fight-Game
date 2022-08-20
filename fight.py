@@ -13,8 +13,6 @@ def main(player1, player2):
     clock = pg.time.Clock()
     fps = 60
     
-    #define colors
-    white=(255,255,255)
     
     #define game variables
     global score #player scores [p1,p2]
@@ -92,9 +90,9 @@ def main(player1, player2):
     #function for drawing fighters health bars
     def draw_health_bar(health,x,y):
         ratio=health/100
-        pg.draw.rect(screen,'#4C4862',(x-2,y-2,404,34))
-        pg.draw.rect(screen,'#4C4862',(x,y,400,30))
-        pg.draw.rect(screen,'#20192B',(x,y,400*ratio,30))
+        pg.draw.rect(screen,'#20192B',(x-2,y-2,404,34))
+        pg.draw.rect(screen,'#20192B',(x,y,400,30))
+        pg.draw.rect(screen,'#9B5618',(x,y,400*ratio,30))
     
     
     

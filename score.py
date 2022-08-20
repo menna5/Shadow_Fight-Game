@@ -1,7 +1,6 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
-import fight
 
 # bg color
 color = '#71556C'
@@ -11,14 +10,14 @@ def display(scores):
     master = Tk()
     master.title('Score')
     master.geometry('1000x600')
-    master.configure(bg='#86514D')
-    '''
+    #master.configure(bg='#86514D')
+
     img = Image.open("assets/background/background.png")
     img = img.resize((1000,600))
     img = ImageTk.PhotoImage(img)
     lbl = Label(master,image=img)
     lbl.pack(side='top',fill=Y,expand=True)
-    '''
+
     game_frame = Frame(master)
     game_frame.pack()
     
@@ -32,6 +31,7 @@ def display(scores):
     my_game = ttk.Treeview(game_frame, yscrollcommand=game_scroll.set, xscrollcommand=game_scroll.set)
     
     my_game.pack()
+    game_frame.place(relx=0.5, rely=0.5, anchor='center')
     
     game_scroll.config(command=my_game.yview)
     game_scroll.config(command=my_game.xview)
@@ -80,10 +80,11 @@ def display(scores):
         play_again = False
         master.destroy()   
     
-    
     # Buttons
-    play_btn = Button(master, text = "Play Again", command = playAgain)
-    play_btn.pack(pady=10)
-    quit_btn = Button(master, text = "Quit", command = quitt)
-    quit_btn.pack(pady=10)
+    play_btn = Button(frame, text = "Play Again", command = playAgain)
+    quit_btn = Button(frame, text = "Quit", command = quitt)
+    play_btn.pack()
+    quit_btn.pack()
+    frame.pack()
+    frame.place(relx=0.5, rely=0.75, anchor='center')
     master.mainloop()
