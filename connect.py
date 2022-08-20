@@ -43,10 +43,9 @@ flag = 0
 # running
 running = True
 while running:
-    pg.display.set_caption('Arena')
-    
     # background
     screen.blit(background, (0, 0))
+    pg.display.set_caption('Arena')
     
     # check keyboard and mouse to start 
     key = pg.key.get_pressed()
@@ -54,34 +53,41 @@ while running:
     
     # show the button
     play_btn.update(screen)
+    
     for event in pg.event.get():
+        # if the user quit 
         if event.type == pg.QUIT:
             running = False
             flag = 1
+        # Handle when clicking on inputs to write
         player1.handle_event(event)
         player2.handle_event(event)
-                
+        
+
+        # if clicked on "Play" or Space key it will start         
         if event.type == pg.MOUSEBUTTONDOWN:
             if play_btn.checkForInput(click):
-                cur.execute('insert into user (name) values (?)', (player1.text,))
-                cur.execute('insert into user (name) values (?)', (player2.text,))
-                con.commit()
                 running = False
         elif key[pg.K_SPACE]:
             running = False
-            cur.execute('insert into user (name) values (?)', (player1.text,))
-            cur.execute('insert into user (name) values (?)', (player2.text,))
-            con.commit()
+            
+    # Show text and input text boxes
     for player in players:
         player.update()
         player.draw(screen)
-    
     screen.blit(name1,(110,175))
     screen.blit(name2,(660,175))
+    
+    # update and refresh the page every 60 seconds
     pg.display.update()
     clock.tick(60)
-    
-    
+
+# insert players names into database    
+if player1.text:   
+    cur.execute('insert into user (name) values (?)', (player1.text,))
+if player2.text:
+    cur.execute('insert into user (name) values (?)', (player2.text,))
+con.commit()    
     
 # If the user clicked quit, the window will close
 if flag:
@@ -94,23 +100,26 @@ else:
             pg.quit()
             break
         # get the scores from the game
-        updated_scores = fight.get_score()
+        updated_scores = fight.score
+        
         # get names of the player
         data = [name for name in cur.execute('select name from user')]
         names = [name[0] for name in data]
+        
         # check names in database
-        if player1 in names:
-            cur.execute('update user set score= ? where name= ?', (updated_scores[0], player1,))
-        if player2 in names:
-            cur.execute('update user set score= ? where name= ?', (updated_scores[1], player2,))  
+        if player1.text in names:
+            cur.execute('update user set score= ? where name= ?', (updated_scores[0], player1.text,))
+        if player2.text in names:
+            cur.execute('update user set score= ? where name= ?', (updated_scores[1], player2.text,))  
+            
         # get top 10
         scores = cur.execute('select distinct * from user order by score desc limit 10')
         con.commit()
+        
         # check if the user want to quit
-        if not fight.flag:
-            score.display(scores)
+        score.display(scores)
         # check if the user want to play again
-        if score.play_again and not score.flag:
+        if score.play_again:
             pg.init()
             screen = pg.display.set_mode((1000, 600))
             background = pg.image.load('assets/background/background.png').convert_alpha()

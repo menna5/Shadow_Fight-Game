@@ -23,7 +23,7 @@ class Button():
 
 
 class InputBox():
-    def __init__(self, x, y, w, h,font, text=' '):
+    def __init__(self, x, y, w, h,font, text=''):
         self.rect = pg.Rect(x, y, w, h)
         self.color = pg.Color('#ffffff')
         self.text = text
