@@ -103,7 +103,7 @@ else:
         # get the scores from the game
         updated_scores = fight.score
         
-        # get names of the player
+        # get names of the players
         data = [name for name in cur.execute('select name from user')]
         names = [name[0] for name in data]
         
