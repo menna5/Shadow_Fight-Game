@@ -96,9 +96,10 @@ else:
     playing = True
     fight.main(player1.text, player2.text)
     while playing:
-        if score.flag or fight.flag:
+        if fight.flag:
             pg.quit()
             break
+        
         # get the scores from the game
         updated_scores = fight.score
         
@@ -118,14 +119,15 @@ else:
         
         # check if the user want to quit
         score.display(scores)
+        
         # check if the user want to play again
-        if score.play_again:
+        if score.play_again and not score.flag:
             pg.init()
             screen = pg.display.set_mode((1000, 600))
             background = pg.image.load('assets/background/background.png').convert_alpha()
             background = pg.transform.scale(background, (1000, 600))
             fight.main(player1.text, player2.text)
-        elif score.flag or fight.flag:
+        elif score.flag:
             pg.quit()
             break
 

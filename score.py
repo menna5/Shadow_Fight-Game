@@ -5,7 +5,7 @@ from PIL import ImageTk, Image
 # bg color
 color = '#71556C'
 flag = False 
-play_again = True
+play_again = False
 def display(scores):
     master = Tk()
     master.title('Score')
