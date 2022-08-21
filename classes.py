@@ -1,7 +1,6 @@
 import pygame as pg
 class Button():
-	def __init__(self, image, pos, text_input, font, base_color, hovering_color):
-		self.image = image
+	def __init__(self, pos, text_input, font, base_color, hovering_color):
 		self.x_pos = pos[0]
 		self.y_pos = pos[1]
 		self.font = font
@@ -12,8 +11,6 @@ class Button():
 		self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
 
 	def update(self, screen):
-		if self.image is not None:
-			screen.blit(self.image, self.rect)
 		screen.blit(self.text, self.text_rect)
 
 	def checkForInput(self, position):
@@ -30,6 +27,7 @@ class InputBox():
         self.font = font
         self.txt_surface = font.render(text, True, self.color)
         self.active = False
+        self.w = w
 
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN:
@@ -41,10 +39,7 @@ class InputBox():
                 self.active = False
         if event.type == pg.KEYDOWN:
             if self.active:
-                if event.key == pg.K_RETURN:
-                    print(self.text)
-                    self.text = ''
-                elif event.key == pg.K_BACKSPACE:
+                if event.key == pg.K_BACKSPACE:
                     self.text = self.text[:-1]
                 else:
                     self.text += event.unicode

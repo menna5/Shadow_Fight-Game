@@ -26,11 +26,11 @@ txt_font = pg.font.Font('assets/fonts/turok.ttf', 32)
 
 
 # create button
-play_btn = Button(image=None, pos=(510, 400), text_input="PLAY", font=font, base_color="#ffffff", hovering_color="White")
+play_btn = Button(pos=(510, 400), text_input="PLAY", font=font, base_color="#ffffff", hovering_color="White")
 
 # text boxes for inputs
-player1 = InputBox(110, 225, 50, 40, txt_font)
-player2 = InputBox(660, 225, 50, 40, txt_font)
+player1 = InputBox(110, 225, 200, 40, txt_font)
+player2 = InputBox(660, 225, 200, 40, txt_font)
 players = [player1, player2]
 
 # text above textboxes
@@ -82,17 +82,19 @@ while running:
     pg.display.update()
     clock.tick(60)
 
-# insert players names into database    
-if player1.text:   
-    cur.execute('insert into user (name) values (?)', (player1.text,))
-if player2.text:
-    cur.execute('insert into user (name) values (?)', (player2.text,))
-con.commit()    
     
 # If the user clicked quit, the window will close
 if flag:
     pg.quit()
 else:
+    # insert players names into database    
+    if player1.text:   
+        cur.execute('insert into user (name) values (?)', (player1.text,))
+    if player2.text:
+        cur.execute('insert into user (name) values (?)', (player2.text,))
+    con.commit()    
+    
+    # start playing
     playing = True
     fight.main(player1.text, player2.text)
     while playing:
